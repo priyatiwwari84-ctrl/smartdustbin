@@ -37,11 +37,19 @@ dustbin = st.selectbox(
     ["Dustbin 1 - Library", "Dustbin 2 - Canteen", "Dustbin 3 - Main Gate"]
 )
 
+if "level" not in st.session_state:
+    st.session_state.level = 20
+
+def clean_dustbin():
+    st.session_state.level = 0
+
+if "level" not in st.session_state:
+    st.session_state.level = 20
+
 level = st.slider(
     "Dustbin Fill Level (%)",
     min_value=0,
     max_value=100,
-    value=20,
     key="level"
 )
 
@@ -99,6 +107,5 @@ st.bar_chart(data.set_index("Location"))
 
 st.write("### 🧹 Maintenance")
 
-if st.button("🗑 Clean Dustbin"):
-    st.session_state["level"] = 0
-    st.rerun()
+if st.button("🗑 Clean Dustbin", on_click=clean_dustbin):
+    st.success("✅ Dustbin cleaned successfully!")
